@@ -66,7 +66,8 @@ jobs:
                 text: `A new version deployed to https://keith-pokedex.herokuapp.com/ (${process.env.AS_COMMIT}) by ${process.env.AS_AUTHOR} succeeded in ${process.env.AS_TOOK}`,
               }]
             }
-          env: SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          env: 
+            SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') && success() }}
 
       - name: send failure notification to slack
@@ -74,5 +75,6 @@ jobs:
         with: 
           status: ${{ job.status }}
           fields: all
-        env: SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        env: 
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         if:  ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') && success() }}
