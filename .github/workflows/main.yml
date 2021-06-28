@@ -17,3 +17,4 @@ jobs:
           heroku_email: "keithlow98@gmail.com"
           procfile: "web: npm start"
           healthcheck: "https://keith-pokedex.herokuapp.com/health"
+          rollbackonhealthcheckfailed: true
