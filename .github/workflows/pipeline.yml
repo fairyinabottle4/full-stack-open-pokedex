@@ -52,14 +52,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
 
-      - name: send success notification to slack
-        uses: 8398a7/action-slack@v3.9.1
+    steps:
+      - uses: 8398a7/action-slack@v3.9.1
         with:
           status: ${{ job.status }}
           fields: commit, author, took
-          env: 
-            SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-          if: always()  
+        env: 
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: always()  
 
       # - name: send failure notification to slack
       #   uses: 8398a7/action-slack@v3.9.1
