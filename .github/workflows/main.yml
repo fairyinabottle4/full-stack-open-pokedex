@@ -12,6 +12,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: deploy website
         if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
       - uses: actions/checkout@v2
@@ -27,6 +28,7 @@ jobs:
   versioning:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: bump patch number
         if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
       - uses: actions/checkout@v2
