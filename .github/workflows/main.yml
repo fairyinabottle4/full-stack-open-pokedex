@@ -1,5 +1,5 @@
 name: Deploy
-
+if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
 on:
   push:
     branches:
