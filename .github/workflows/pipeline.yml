@@ -31,3 +31,25 @@ jobs:
           command: npm run test:e2e
           start: npm run start-prod
           wait-on: http://localhost:5000
+
+      - name: pushing code to heroku
+      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+        if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "keith-pokedex" #Must be unique in Heroku
+          heroku_email: "keithlow98@gmail.com"
+          procfile: "web: npm run start-prod"
+          healthcheck: "https://keith-pokedex.herokuapp.com/health"
+          rollbackonhealthcheckfailed: true
+          
+      - uses: actions/checkout@v2
+
+      - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@1.33.0
+        if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEFAULT_BUMP: patch
+
+
