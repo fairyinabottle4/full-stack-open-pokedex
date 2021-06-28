@@ -16,3 +16,4 @@ jobs:
           heroku_app_name: "keith-pokedex" #Must be unique in Heroku
           heroku_email: "keithlow98@gmail.com"
           procfile: "web: npm run start-prod"
+          healthcheck: "https://keith-pokedex.herokuapp.com/health"
