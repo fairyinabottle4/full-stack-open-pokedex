@@ -12,6 +12,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: deploy website
         if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
       - uses: actions/checkout@v2
       - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
@@ -26,6 +27,7 @@ jobs:
   versioning:
     runs-on: ubuntu-latest
     steps:
+      - name: bump patch number
         if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') }}
       - uses: actions/checkout@v2
       - name: Bump version and push tag
