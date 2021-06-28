@@ -52,4 +52,29 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
 
+      - name: send success notification to slack
+        uses: 8398a7/action-slack@v3.9.1
+        with:
+          status: custom
+          fields: commit, author, took
+          custom_payload: |
+            {
+              username: 'action-slack',
+              icon_emoji: :white_check_mark:,
+              attachments: [{
+                color: 'good',
+                text: `A new version deployed to https://fullstack-open-part11-bloglist.herokuapp.com/ (${process.env.AS_COMMIT}) by ${process.env.AS_AUTHOR} succeeded in ${process.env.AS_TOOK}`,
+              }]
+            }
+          env :
+            SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          if:  ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') && success() }}
 
+      - name: send failure notification to slack
+        uses: 8398a7/action-slack@v3.9.1
+        with: 
+          status: ${{ job.status }}
+          fields: all
+        env: 
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if:  ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') && success() }}
