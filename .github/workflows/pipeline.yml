@@ -53,7 +53,7 @@ jobs:
           DEFAULT_BUMP: patch
 
       - uses: 8398a7/action-slack@v3.9.1
-      # - name: send success notification to slack
+      - name: send success notification to slack
         with:
           status: ${{ job.status }}
           fields: commit, author, took
