@@ -2,16 +2,16 @@ name: Periodic Health Check
 
 #remember to disable the schedule later!
 on:
-  schedule:
-    # * is a special character in YAML so you have to quote this string
-    - cron:  '*/15 * * * *'
+  # schedule:
+  #   # * is a special character in YAML so you have to quote this string
+  #   - cron:  '*/15 * * * *'
 
 jobs:
   periodic_health_check:
     runs-on: ubuntu-18.04
     steps:
       - name: Check the deployed service URL
-        uses: jtalk/url-health-check-action@v1.2
+        uses: jtalk/url-health-check-action@v1.5
         with:
           url: https://keith-pokedex.herokuapp.com/
           # Follow redirects, or just report success on 3xx status codes
