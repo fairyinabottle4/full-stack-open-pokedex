@@ -58,13 +58,12 @@ jobs:
           fields: commit, author, took
         env: 
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-        if: always()  
+        if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') && success() }}  
 
-      # - name: send failure notification to slack
-      #   uses: 8398a7/action-slack@v3.9.1
+      # - uses: 839a7/action-slack@v3.9.1
       #   with: 
       #     status: ${{ job.status }}
       #     fields: all
-      #   env: 
+      #   env:
       #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      #   if:  ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') && success() }}
+      #   if:   
