@@ -52,8 +52,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           DEFAULT_BUMP: patch
 
-      - uses: 8398a7/action-slack@v3.9.1
       - name: send success notification to slack
+        uses: 8398a7/action-slack@v3.9.1
         with:
           status: ${{ job.status }}
           fields: commit, author, took
