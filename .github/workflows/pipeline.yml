@@ -53,7 +53,6 @@ jobs:
           DEFAULT_BUMP: patch
 
       - uses: 8398a7/action-slack@v3.9.1
-      # - name: send success notification to slack
         with:
           status: ${{ job.status }}
           fields: commit, author, took
@@ -62,7 +61,6 @@ jobs:
         if: ${{ github.event_name == 'push' && !contains(join(github.event.commits.*.message, ' '), '#skip') && success() }}  
 
       - uses: 839a7/action-slack@v3.9.1
-      # - name: send failure notification to slack
         with: 
           status: ${{ job.status }}
           fields: all
